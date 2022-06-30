@@ -1,3 +1,11 @@
+:root{
+  --primary-one: #F5D6BA;
+  --primary-two: #2C2C54;
+  --secondary: #ACC3A6;
+  --accent-one: #A40E4C;
+  --accent-two: #F49D6E;
+}
+
 .App {
   text-align: center;
 }
@@ -14,18 +22,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--primary-one);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--accent-two);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--accent-one);
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +43,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.time{
+  color: var(--primary-two);
+  text-shadow: .3rem .3rem var(--secondary);
+  font-size: 10rem;
+}
+
+.options{
+  color: var(--accent-two);
+  font-size: 1rem;
 }
