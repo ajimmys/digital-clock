@@ -4,17 +4,18 @@ class AppComponent extends Component {
     constructor(props) {
         super(props); 
 
+        var currentTimeZone = getTimeZone()
         var options = {
             'timeStyle': 'medium',
             'hour12': true,
-            'timeZone': 'US/Central'
+            'timeZone': currentTimeZone
         }
 
         this.state =  {
             displayTime: new Date().toLocaleString('en-US', options),
             showSeconds: false,
             hour12: false,
-            timeZone: 'US/Central'
+            timeZone: currentTimeZone
         };
     }
 
@@ -23,6 +24,7 @@ class AppComponent extends Component {
         type === 'checkbox' ? this.setState({[name]: checked}) : this.setState({[name] : value})
     }
     
+
     tick(){
 
          //Reference for options: https://www.w3schools.com/jsref/jsref_tolocalestring.asp
@@ -85,31 +87,27 @@ class AppComponent extends Component {
                         onChange={this.handleChange}
                         name='timeZone'
                         >
-                            <option value='US/Eastern'>US/Eastern (UTC-5)</option>
-                            <option value='US/Central'>US/Central (UTC-6)</option>
-                            <option value='US/Mountain'>US/Mountain (UTC-7)</option>
-                            <option value='US/Pacific'>US/Pacific (UTC-8)</option>
-                            <option value='US/Alaska'>US/Alaska (UTC-9)</option>
-                            <option value='Pacific/Honolulu'>Pacific/Honolulu (UTC-10)</option>
-                            <option value='US/Samoa'>US/Samoa (UTC-11)</option>
-                            <option value='Etc/GMT+12'>Etc/GMT+12 (UTC-12)</option>
-                            <option value='Pacific/Auckland'>Pacific/Auckland (UTC+12)</option>
-                            <option value='Pacific/Norfolk'>Pacific/Norfolk (UTC+11)</option>
-                            <option value='Pacific/Guam'>Pacific/Guam (UTC+10)</option>
-                            <option value='Asia/Tokyo'>Asia/Tokyo (UTC+9)</option>
-                            <option value='Asia/Hong_Kong'>Asia/Hong_Kong (UTC+8)</option>
-                            <option value='Asia/Bangkok'>Asia/Bangkok (UTC+7)</option>
-                            <option value='Etc/GMT-6'>Etc/GMT-6 (UTC+6)</option>
-                            <option value='Etc/GMT-5'>Etc/GMT-5 (UTC+5)</option>
-                            <option value='Asia/Dubai'>Asia/Dubai (UTC+4)</option>
-                            <option value='Europe/Moscow'>Europe/Moscow (UTC+3)</option>
-                            <option value='Europe/Kiev'>Europe/Kiev (UTC+2)</option>
-                            <option value='Europe/Dublin'>Europe/Dublin (UTC+1)</option>
-                            <option value='Europe/London'>Europe/London (UTC+0)</option>
-                            <option value='Atlantic/Cape_Verde'>Atlantic/Cape Verde (UTC-1)</option>
-                            <option value='Brazil/DeNoronha'>Brazil/DeNoronha (UTC-2)</option>
-                            <option value='Brazil/East'>Brazil/East (UTC-3)</option>
-                            <option value='America/Goose Bay'>America/Goose Bay (UTC-4)</option>
+                            <option value='Etc/GMT+4'>US/Eastern (UTC-5)</option>
+                            <option value='Etc/GMT+5'>US/Central (UTC-6)</option>
+                            <option value='Etc/GMT+6'>US/Mountain (UTC-7)</option>
+                            <option value='Etc/GMT+7'>US/Pacific (UTC-8)</option>
+                            <option value='Etc/GMT+8'>Anchorage(UTC-9)</option>
+                            <option value='Etc/GMT+10'>Honolulu (UTC-10)</option>
+                            <option value='Etc/GMT+11'>Midway (UTC-11)</option>
+                            <option value='Pacific/Chatham'>Chathman Islands (UTC+12.75)</option>
+                            <option value='Etc/GMT-10'>Sydney (UTC+10)</option>
+                            <option value='Etc/GMT-9'>Tokyo (UTC+9)</option>
+                            <option value='Etc/GMT-8'>Beijing (UTC+8)</option>
+                            <option value='Etc/GMT-7'>Bangkok (UTC+7)</option>
+                            <option value='Asia/Calcutta'>New Delhi (UTC+5.5)</option>
+                            <option value='Etc/GMT-5'>Islamabad (UTC+5)</option>
+                            <option value='Etc/GMT-4'>Abu Dubai (UTC+4)</option>
+                            <option value='Etc/GMT-3'>Moscow (UTC+3)</option>
+                            <option value='Etc/GMT-2'>Berlin (UTC+2)</option>
+                            <option value='Etc/GMT-1'>London (UTC+1)</option>
+                            <option value='Etc/GMT+0'>Reykjavik (UTC)</option>
+                            <option value='Etc/GMT+2'>Nuuk (UTC-2)</option>
+                            <option value='Etc/GMT+3'>Goose Bay (UTC-3)</option>
                         </select>
                     </label> Change Time Zone
 
@@ -118,6 +116,13 @@ class AppComponent extends Component {
         )
     }
 
+}
+
+function getTimeZone(){
+    var timeZoneOffset = new Date().getTimezoneOffset()
+    var gmtOffset = timeZoneOffset / (60)
+
+    return gmtOffset >= 0 ? "Etc/GMT+" + gmtOffset : "Etc/GMT" + gmtOffset
 }
 
 export default AppComponent;
