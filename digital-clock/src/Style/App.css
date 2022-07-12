@@ -48,7 +48,7 @@
 
 .time{
   color: var(--primary-two);
-  /*text-shadow: .3rem .3rem var(--secondary);*/
+  text-shadow: .3rem .3rem var(--secondary);
   font-size: 10rem;
 }
 

@@ -18,6 +18,7 @@ class AppComponent extends Component {
             timeZone: currentTimeZone,
             clockColor: '#2C2C54',
             shadowColor: '#ACC3A6',
+            fontColor: '#F49D6E',
             backgroundColor: '#F5D6BA'
         };
     }
@@ -31,36 +32,13 @@ class AppComponent extends Component {
         this.setState({clockColor: '#2C2C54', shadowColor: "#ACC3A6", backgroundColor: '#F5D6BA'})
     }
 
-    calculateShadow = () => {
+    //Make this able to do both the font (based on the background - add 127 to background color) and the shadow (based on the Clock Color - below)
+    updateColors = () => {
 
-        var clockColorValues = []
-        var colorValues = []
+        var newShadow = calculateNewColor(this.state.clockColor, "shadow")
+        var newFontColor = calculateNewColor(this.state.backgroundColor, "font")
 
-        clockColorValues.push(this.state.clockColor.slice(1, 3))
-        clockColorValues.push(this.state.clockColor.slice(3, 5))
-        clockColorValues.push(this.state.clockColor.slice(5, 7))
-
-        clockColorValues[0] = parseInt(clockColorValues[0], 16) + 128
-        clockColorValues[1] = parseInt(clockColorValues[1], 16) + 151
-        clockColorValues[2] = parseInt(clockColorValues[2], 16) + 82
-        
-        clockColorValues.forEach((value) => {
-            if(value > 255){
-                value = value - 255
-            }
-
-            value = value.toString(16)
-
-            if(value.length === 1){
-                value = "0" + value
-            }
-
-            colorValues.push(value)
-        });
-
-        var newShadow = "#" + colorValues[0].toString(16) + colorValues[1].toString(16) + colorValues[2].toString(16)
-
-        this.setState({shadowColor : newShadow})
+        this.setState({shadowColor : newShadow, fontColor: newFontColor})
     }
 
     tick(){
@@ -81,15 +59,17 @@ class AppComponent extends Component {
             options.hour12 = false
         }
 
-        this.calculateShadow()
+        this.updateColors()
 
         this.setState({
             displayTime: new Date().toLocaleString('en-US', options)
         })
+
+        document.title = this.state.displayTime
     }
 
     componentDidMount(){
-        this.intervalID = setInterval(() => this.tick(), 100);    
+        this.intervalID = setInterval(() => this.tick(), 100);
     }
 
     componentWillUnmount(){
@@ -100,7 +80,7 @@ class AppComponent extends Component {
         return(
             <div class='App App-header' style={{backgroundColor: this.state.backgroundColor}}>
                 <div class='time' style={{color: this.state.clockColor, textShadow: `.3rem .3rem ${this.state.shadowColor}`}}>{this.state.displayTime }</div>
-                <div class='options'>
+                <div class='options' style={{color: this.state.fontColor}}>
                     <label>
                         <input 
                             type='checkbox'
@@ -184,6 +164,44 @@ function getTimeZone(){
     var gmtOffset = timeZoneOffset / (60)
 
     return gmtOffset >= 0 ? "Etc/GMT+" + gmtOffset : "Etc/GMT" + gmtOffset
+}
+
+function calculateNewColor(oldColorHex, newColorDestination){
+
+    var oldColorValues = []
+    var colorValues = []
+
+    oldColorValues.push(oldColorHex.slice(1, 3))
+    oldColorValues.push(oldColorHex.slice(3, 5))
+    oldColorValues.push(oldColorHex.slice(5, 7))
+
+    if(newColorDestination === "shadow"){
+        oldColorValues[0] = parseInt(oldColorValues[0], 16) + 128
+        oldColorValues[1] = parseInt(oldColorValues[1], 16) + 151
+        oldColorValues[2] = parseInt(oldColorValues[2], 16) + 82
+    } else {
+        oldColorValues[0] = parseInt(oldColorValues[0], 16) + 76
+        oldColorValues[1] = parseInt(oldColorValues[1], 16) + 57
+        oldColorValues[2] = parseInt(oldColorValues[2], 16) - 76
+    }
+
+    oldColorValues.forEach((value) => {
+        if(value > 255){
+            value = value - 255
+        } else if (value < 0) {
+            value = value + 255
+        }
+
+        value = value.toString(16)
+
+        if(value.length === 1){
+            value = "0" + value
+        }
+
+        colorValues.push(value)
+    });
+
+    return "#" + colorValues[0].toString(16) + colorValues[1].toString(16) + colorValues[2].toString(16)
 }
 
 export default AppComponent;
