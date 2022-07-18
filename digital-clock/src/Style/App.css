@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Edu+VIC+WA+NT+Beginner&family=Kameron&family=Rokkitt&family=Rubik+Moonrocks&display=swap');
+
 :root{
   --primary-one: #F5D6BA;
   --primary-two: #2C2C54; 
@@ -8,17 +10,6 @@
 
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -33,19 +24,6 @@
   color: var(--accent-two);
 }
 
-.App-link {
-  color: var(--accent-one);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .time{
   color: var(--primary-two);
   text-shadow: .3rem .3rem var(--secondary);
@@ -53,6 +31,26 @@
 }
 
 .options{
-  color: var(--accent-two);
+  color: var(--primary-two);
+  background-color: lightgrey;
+  padding: 1.5rem;
   font-size: 1rem;
+
+  position: relative;
+
+  border-radius: 15px;
+  box-shadow: 0 3px 9px black, inset 0 0 9px white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.options label{
+  
+  margin: -.25rem;
+}
+
+.option-label{
+  padding-left: .25rem;
 }

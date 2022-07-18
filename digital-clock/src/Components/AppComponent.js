@@ -16,9 +16,9 @@ class AppComponent extends Component {
             showSeconds: false,
             hour12: false,
             timeZone: currentTimeZone,
+            clockFont: 'Rokkitt, Kameron, serif',
             clockColor: '#2C2C54',
             shadowColor: '#ACC3A6',
-            fontColor: '#F49D6E',
             backgroundColor: '#F5D6BA'
         };
     }
@@ -36,9 +36,8 @@ class AppComponent extends Component {
     updateColors = () => {
 
         var newShadow = calculateNewColor(this.state.clockColor, "shadow")
-        var newFontColor = calculateNewColor(this.state.backgroundColor, "font")
 
-        this.setState({shadowColor : newShadow, fontColor: newFontColor})
+        this.setState({shadowColor : newShadow})
     }
 
     tick(){
@@ -78,9 +77,11 @@ class AppComponent extends Component {
 
     render() {
         return(
-            <div class='App App-header' style={{backgroundColor: this.state.backgroundColor}}>
+            <div class='App App-header' style={{
+                backgroundColor: this.state.backgroundColor,
+                fontFamily: this.state.clockFont}}>
                 <div class='time' style={{color: this.state.clockColor, textShadow: `.3rem .3rem ${this.state.shadowColor}`}}>{this.state.displayTime }</div>
-                <div class='options' style={{color: this.state.fontColor}}>
+                <div class='options'>
                     <label>
                         <input 
                             type='checkbox'
@@ -88,7 +89,8 @@ class AppComponent extends Component {
                             checked={this.state.showSeconds}
                             onChange={this.handleChange}
                         />
-                    </label> Show Seconds?
+                        <span class='option-label'> Show Seconds? </span>
+                    </label> 
                     <br />
                     <label>
                         <input 
@@ -97,7 +99,8 @@ class AppComponent extends Component {
                             checked={this.state.hour12}
                             onChange={this.handleChange}
                         />
-                    </label> 24 Hour Time?
+                        <span class='option-label'>24 Hour Time?</span>
+                    </label> 
                     <br />
                     <label>
                         <select
@@ -127,7 +130,23 @@ class AppComponent extends Component {
                             <option value='Etc/GMT+2'>Nuuk (UTC-2)</option>
                             <option value='Etc/GMT+3'>Goose Bay (UTC-3)</option>
                         </select>
-                    </label> Change Time Zone
+                        <span class='option-label'>Change Time Zone</span> 
+                    </label>
+                    <br />
+                    <label>
+                        <select 
+                        value={this.state.clockFont}
+                        onChange={this.handleChange}
+                        name='clockFont'
+                        >
+                            <option value='Rokkitt, Kameron, serif'>Default</option>
+                            <option value='Bebas Neue, cursive'>Benas Neue</option>
+                            <option value='Edu VIC WA NT Beginner, cursive'>Slanted</option>
+                            <option value='Rubik Moonrocks, cursive'>Moon Rock</option>
+                            
+                        </select>
+                        <span class='option-label'>Change Font</span>
+                    </label>
                     <br />
                     <label>
                         <input 
@@ -136,7 +155,8 @@ class AppComponent extends Component {
                             value={this.state.clockColor}
                             onChange={this.handleChange}
                         />
-                    </label>Clock Font Color
+                        <span class='option-label'>Clock Font Color</span> 
+                    </label>
                     <br />
                     <label>
                         <input 
@@ -145,7 +165,8 @@ class AppComponent extends Component {
                             value={this.state.backgroundColor}
                             onChange={this.handleChange}
                         />
-                    </label>Background Color
+                        <span class='option-label'>Background Color</span> 
+                    </label>
                     <br />
                     <input 
                             type='button'
